@@ -1,0 +1,38 @@
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    min-width: 400px;
+}
+
+.contactForm label {
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+.contactForm input {
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+}
+
+.contactForm button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 10rem;
+    text-transform: uppercase;
+}
+
+.contactForm button:hover {
+    background-color: #0056b3;
+}

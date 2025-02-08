@@ -1,0 +1,20 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  align-self: start;
+  text-transform: uppercase;
+}
+
+.filter input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
