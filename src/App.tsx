@@ -2,53 +2,43 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import { ContactForm } from './components/ContactForm'
 import { Contact } from './types/Contact'
-import { INITIAL_STATE_DATA } from './constants/InitialStateData';
-import { State } from './interfaces/State';
 import { ContactList } from './components/ContactList';
 import { Filter } from './components/Filter';
 
 
 function App() {
-  const [state, setState] = useState<State>(() => {
+  const [contacts, setContacts] = useState<Contact[]>(() => {
     const storedContacts = localStorage.getItem('contacts');
-    return storedContacts ? { contacts:JSON.parse(storedContacts), filter: '' } : INITIAL_STATE_DATA;
+    return storedContacts ? JSON.parse(storedContacts) : [];
   });
+  const [filter, setFilter] = useState<string>('');
 
-  const filteredContacts = state.contacts.filter((contact) => {
-    return contact.name.toLowerCase().includes(state.filter.toLowerCase());
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.name.toLowerCase().includes(filter.toLowerCase());
   });
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(state.contacts));
-  }, [state.contacts]);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleAddContact = (newContact: Contact) => {
-    setState((prevState) => ({
-      contacts: [...prevState.contacts, newContact],
-      filter: '',
-    }));
-  };
-
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prevState) => ({
-      ...prevState,
-      filter: event.target.value,
-    }));
+    setContacts((prevContacts) => [...prevContacts, newContact]);
   };
 
   const handleDeleteContact = (id: string) => {
-    setState((prevState) => ({
-      ...prevState,
-      contacts: prevState.contacts.filter((contact) => contact.id !== id),
-    }));
+    setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== id));
+  };
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
   };
 
   return (
     <>
       <h1>Phonebook</h1>
-      <ContactForm contacts={state.contacts} onAddContact={handleAddContact} />
+      <ContactForm contacts={contacts} onAddContact={handleAddContact} />
       <h2>Contacts</h2>
-      <Filter filter={state.filter} onFilterChange={handleFilterChange} />
+      <Filter filter={filter} onFilterChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} onDeleteContact={handleDeleteContact} />
     </>
   )
